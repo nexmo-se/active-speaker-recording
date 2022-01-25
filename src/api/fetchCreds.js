@@ -6,5 +6,5 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 export const getCredentials = async (roomName) => {
-  return axios.get(`${API_URL}/session/${roomName}}`);
+  return axios.get(`${API_URL}/session/${roomName}`);
 };
