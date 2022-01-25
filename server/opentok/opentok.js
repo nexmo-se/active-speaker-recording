@@ -28,18 +28,18 @@ const createSessionandToken = (session) => {
   });
 };
 
-const createRender = async () => {
+const createRender = async (roomName) => {
   try {
     const { sessionId, token, apiKey } = await getCredentials();
     console.log(token);
 
     const data = JSON.stringify({
-      url: `https://e579-2-220-24-117.ngrok.io/room/recorder/test`,
+      url: `https://e579-2-220-24-117.ngrok.io/room/recorder/${roomName}`,
       // url: 'https://www.google.es/',
       sessionId: sessionId,
       token: token,
       projectId: apiKey,
-      statusCallbackUrl: 'https://e579-2-220-24-117.ngrok.io/render/status',
+      statusCallbackUrl: 'https://e579-2-220-24-117.ngrok.io/status',
     });
 
     const config = {
@@ -81,6 +81,7 @@ const deleteRender = async (id) => {
 
 const signal = (sessionId, archiveId) => {
   return new Promise((res, rej) => {
+    console.log(archiveId + ' being sent');
     opentok.signal(
       sessionId,
       null,

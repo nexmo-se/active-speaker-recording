@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 
 const sessions = {};
 
-app.get('/session/:room/', async (req, res) => {
+app.get('/session/:room', async (req, res) => {
   try {
     const { room: roomName } = req.params;
 
@@ -53,15 +53,18 @@ for (const [key, value] of Object.entries(test)) {
 
 */
 
-app.post('/render', async (req, res) => {
+app.post('/render/:roomName', async (req, res) => {
   try {
-    const data = await opentok.createRender();
+    const roomName = req.params.roomName;
+    console.log(roomName);
+    console.log('creating render for ' + roomName);
+    const data = await opentok.createRender(roomName);
     console.log(data);
-    const { url, id, sessionId } = data;
-    const roomName = url.split('/recorder/')[1];
+    const { id, sessionId } = data;
+    // const roomName = url.split('/recorder/')[1];
     sessions[roomName].renderId = id;
     sessions[roomName].renderedSession = sessionId;
-    // sessions[roomName].sessionId = data.sessionId;
+    sessions[roomName].sessionId = data.sessionId;
     res.status(200).send(data);
   } catch (e) {
     res.status(500).send({ message: e });
@@ -80,21 +83,7 @@ app.get('/render/stop/:id', async (req, res) => {
   }
 });
 
-app.post('/archive/start', async (req, res) => {
-  const { session_id } = req.body;
-  try {
-    const response = await opentok.initiateArchiving(session_id);
-    res.json({
-      archiveId: response.id,
-      status: response.status,
-    });
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).send({ message: error.message });
-  }
-});
-
-app.post('/render/status', async (req, res) => {
+app.post('/status', async (req, res) => {
   let sessionToSignal;
   try {
     const { sessionId, status, id } = req.body;
@@ -103,6 +92,7 @@ app.post('/render/status', async (req, res) => {
         for (const [key_e, value_e] of Object.entries(value)) {
           if (value_e === id) {
             sessionToSignal = sessions[key].sessionId;
+            console.log('gonna signal' + sessionToSignal);
           }
         }
       }
@@ -111,6 +101,7 @@ app.post('/render/status', async (req, res) => {
       const archiveId = response.id;
       if (response.status === 'started') {
         const signalResponse = await opentok.signal(sessionToSignal, archiveId);
+        console.log('archive id sent ' + archiveId);
       }
     }
     if (status === 'stopped') {

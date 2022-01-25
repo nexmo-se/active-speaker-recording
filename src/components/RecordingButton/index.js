@@ -13,7 +13,6 @@ import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import { IconButton } from '@material-ui/core';
 import styles from './styles';
 import Tooltip from '@material-ui/core/Tooltip';
-import { useEffect } from 'react';
 import { useParams } from 'react-router';
 
 export default function RecordingButton({ classes, room }) {
@@ -50,7 +49,7 @@ export default function RecordingButton({ classes, room }) {
 
   const startRender = async () => {
     try {
-      const renderData = await render();
+      const renderData = await render(roomName);
       if ((renderData.status = 200 && renderData.data)) {
         const { id, sessionId } = renderData.data;
         console.log(renderData.data);
