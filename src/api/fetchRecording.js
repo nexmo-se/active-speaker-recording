@@ -15,7 +15,7 @@ const startRecording = (sessionId) => {
 };
 
 const render = (roomName) => {
-  return axios.post(`${API_URL}/render/${roomName}`);
+  return axios.post(`${API_URL}/render`, { roomName: roomName });
 };
 
 const stopRender = (id) => {

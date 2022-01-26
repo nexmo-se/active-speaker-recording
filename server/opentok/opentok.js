@@ -39,7 +39,7 @@ const createRender = async (roomName) => {
       sessionId: sessionId,
       token: token,
       projectId: apiKey,
-      statusCallbackUrl: 'https://e579-2-220-24-117.ngrok.io/status',
+      statusCallbackUrl: 'https://e579-2-220-24-117.ngrok.io/render/status',
     });
 
     const config = {

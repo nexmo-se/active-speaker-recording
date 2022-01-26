@@ -53,18 +53,16 @@ for (const [key, value] of Object.entries(test)) {
 
 */
 
-app.post('/render/:roomName', async (req, res) => {
+app.post('/render', async (req, res) => {
   try {
-    const roomName = req.params.roomName;
-    console.log(roomName);
-    console.log('creating render for ' + roomName);
+    const { roomName } = req.body;
     const data = await opentok.createRender(roomName);
     console.log(data);
     const { id, sessionId } = data;
     // const roomName = url.split('/recorder/')[1];
     sessions[roomName].renderId = id;
     sessions[roomName].renderedSession = sessionId;
-    sessions[roomName].sessionId = data.sessionId;
+    // sessions[roomName].sessionId = data.sessionId;
     res.status(200).send(data);
   } catch (e) {
     res.status(500).send({ message: e });
@@ -83,7 +81,7 @@ app.get('/render/stop/:id', async (req, res) => {
   }
 });
 
-app.post('/status', async (req, res) => {
+app.post('/render/status', async (req, res) => {
   let sessionToSignal;
   try {
     const { sessionId, status, id } = req.body;
@@ -92,7 +90,6 @@ app.post('/status', async (req, res) => {
         for (const [key_e, value_e] of Object.entries(value)) {
           if (value_e === id) {
             sessionToSignal = sessions[key].sessionId;
-            console.log('gonna signal' + sessionToSignal);
           }
         }
       }
@@ -101,7 +98,6 @@ app.post('/status', async (req, res) => {
       const archiveId = response.id;
       if (response.status === 'started') {
         const signalResponse = await opentok.signal(sessionToSignal, archiveId);
-        console.log('archive id sent ' + archiveId);
       }
     }
     if (status === 'stopped') {

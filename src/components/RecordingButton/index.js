@@ -47,7 +47,8 @@ export default function RecordingButton({ classes, room }) {
 
   //need to create a signal from the server side so that notifies me of archive started and send me the archiveId to stop it
 
-  const startRender = async () => {
+  const startRender = async (roomName) => {
+    if (isRecording) return;
     try {
       const renderData = await render(roomName);
       if ((renderData.status = 200 && renderData.data)) {
@@ -96,7 +97,7 @@ export default function RecordingButton({ classes, room }) {
 
   const handleRecordingAction = () => {
     if (room) {
-      isRecording ? stopRenderAndRecording(renderId) : startRender();
+      isRecording ? stopRenderAndRecording(renderId) : startRender(roomName);
       // ? handleRecordingStop(archiveId)
       // : handleRecordingStart(sessionId);
     }

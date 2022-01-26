@@ -19,7 +19,6 @@ export default function useSignal({ room }) {
   }, []);
 
   const archiveListener = React.useCallback(({ data }) => {
-    console.log('archiveid received ' + data);
     setArchiveId(data);
     // addMessageToList(data, isSentByMe, from, date);
     // console.log('who sent it' + isSentByMe);
@@ -32,12 +31,12 @@ export default function useSignal({ room }) {
   React.useEffect(() => {
     if (room) {
       room.on('signal:text', signalListener);
-      room.on('signal:archiveStarted', archiveListener);
+      room.on('signal', archiveListener);
     }
     return function cleanup() {
       if (room) {
         room.off('signal:text', signalListener);
-        room.off('signal:archiveStarted', (e) => console.log(e));
+        room.off('signal:archiveStarted', archiveListener);
       }
     };
   }, [room, signalListener, archiveListener]);
