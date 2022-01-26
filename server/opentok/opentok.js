@@ -34,12 +34,11 @@ const createRender = async (roomName) => {
     console.log(token);
 
     const data = JSON.stringify({
-      url: `https://e579-2-220-24-117.ngrok.io/room/recorder/${roomName}`,
-      // url: 'https://www.google.es/',
+      url: `${process.env.REACT_APP_API_URL_PRODUCTION}/room/recorder/${roomName}`,
       sessionId: sessionId,
       token: token,
       projectId: apiKey,
-      statusCallbackUrl: 'https://e579-2-220-24-117.ngrok.io/render/status',
+      statusCallbackUrl: `${process.env.REACT_APP_API_URL_PRODUCTION}/render/status`,
     });
 
     const config = {
