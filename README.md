@@ -1,11 +1,8 @@
-# Vonage Video Express Demo App 
+# Active Speaker Recording
 
-This application shows how to build a multi-party video app with [Vonage Video Express](https://tokbox.com/developer/multiparty/) and [Create React App](https://reactjs.org/docs/create-a-new-react-app.html). It's a library that is built on top of the [Vonage Video API for Javascript](https://tokbox.com/developer/sdks/js/). The Vonage Video Express provides by default the following features:
+This application is a modification of the [Vonage Video Express Sample app](https://github.com/nexmo-se/video-express-react-app). The goal of this project is to show you how you can leverage the Experience Composer API along with Vonage Video Express to place the active speaker on the main screen and record as it changes when another user becomes the current active speaker.
 
-- Layout Management. Out of the box responsive UI and Layout Manager with customizable components
-- Video Quality Optimization (framerate and resolution) based on the number of participants, rendering sizes, CPU and network conditions.
-- Network optimization. Automatically remove video or audio for participants who are non visible or non speaking, optimizing bandwidth resources
-  -Ease of use. It providers a more natural interaction by replacing publishing, subscribing and streams with Room and Participants.
+Vonage Video Express offers two different layouts (grid and active-speaker). This application uses the `active-speaker` layout when the room is initialised. When the user hits the record button, a render (stream) will be created in a new session containing the full layout of the webpage using the Experience Composer API and once the render starts in the new session, an archive will start recording the active speaker changes.
 
 ## Prerequisites
 
