@@ -96,8 +96,12 @@ app.post('/render/status', async (req, res) => {
       const response = await opentok.initiateArchiving(sessionId);
       console.log(response);
       const archiveId = response.id;
+      const renderedSession = response.sessionId;
       if (response.status === 'started') {
-        const signalResponse = await opentok.signal(sessionToSignal, archiveId);
+        const signalResponse = await opentok.signal(
+          sessionToSignal,
+          `${archiveId}:${renderedSession}`
+        );
       }
     }
     if (status === 'stopped') {

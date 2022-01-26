@@ -9,10 +9,10 @@ import LayoutButton from 'components/LayoutButton';
 import MuteAll from 'components/MuteAllButton';
 import ScreenSharingButton from 'components/ScreenSharingButton';
 import EndCallButton from 'components/EndCallButton';
-import { UserContext } from 'context/UserContext';
 import styles from './styles';
 import { useParams } from 'react-router';
 import { useTheme } from '@material-ui/core';
+import useSignal from '../../hooks/useSignal';
 
 import MoreOptionsButton from 'components/MoreOptionsButton';
 
@@ -26,7 +26,7 @@ export default function ToolBar({
   participants,
   localParticipant,
 }) {
-  const { user } = useContext(UserContext);
+  const { renderedSesion } = useSignal({ room });
   const { roomName } = useParams();
   const theme = useTheme();
   const { push } = useHistory();
@@ -95,7 +95,7 @@ export default function ToolBar({
 
   const endCall = () => {
     if (room) {
-      push(`${roomName}/${user.renderedSession}/end`);
+      push(`${roomName}/${renderedSesion}/end`);
       room.leave();
     }
   };

@@ -3,6 +3,7 @@ import moment from 'moment';
 
 export default function useSignal({ room }) {
   const [archiveId, setArchiveId] = React.useState(null);
+  const [renderedSesion, setRenderedSession] = React.useState(null);
   const [listOfMessages, setListOfMessages] = React.useState([]);
 
   const sendSignal = React.useCallback((data, type) => {
@@ -19,7 +20,10 @@ export default function useSignal({ room }) {
   }, []);
 
   const archiveListener = React.useCallback(({ data }) => {
-    setArchiveId(data);
+    const archiveId = data.split(':')[0];
+    const sessionRendered = data.split(':')[1];
+    setArchiveId(archiveId);
+    setRenderedSession(sessionRendered);
     // addMessageToList(data, isSentByMe, from, date);
     // console.log('who sent it' + isSentByMe);
   }, []);
@@ -47,6 +51,7 @@ export default function useSignal({ room }) {
     sendSignal,
     listOfMessages,
     archiveId,
+    renderedSesion,
     // addMessageToList
   };
 }

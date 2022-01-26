@@ -4,7 +4,7 @@ if (process.env.NODE_ENV === 'production') {
   API_URL = `${process.env.REACT_APP_API_URL_PRODUCTION}`;
 }
 const fetchRecordings = (sessionId) => {
-  return axios.get(`${API_URL}/${sessionId}`);
+  return axios.get(`${API_URL}/archive/${sessionId}`);
 };
 
 const startRecording = (sessionId) => {
