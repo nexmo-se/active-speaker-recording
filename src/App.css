@@ -69,7 +69,7 @@ video::after {
 }
 
 .emoji {
-  font-size: 80px;
+  font-size: 80px !important;
   position: absolute;
   animation-name: surfing;
   animation-duration: 5s;
