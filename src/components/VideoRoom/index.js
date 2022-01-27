@@ -5,6 +5,7 @@ import styles from './styles.js';
 import useRoom from '../../hooks/useRoom';
 import { UserContext } from '../../context/UserContext';
 import { useRouteMatch } from 'react-router-dom';
+import useSignal from '../../hooks/useSignal';
 
 import ToolBar from 'components/ToolBar';
 
@@ -24,6 +25,7 @@ export default function VideoRoom() {
     cameraPublishing,
     localParticipant,
   } = useRoom();
+  const { sendSignal } = useSignal({ room });
   const isRecorder = useRouteMatch('/room/recorder/:roomName')?.isExact
     ? true
     : false;
@@ -46,7 +48,7 @@ export default function VideoRoom() {
         setError(err);
         console.log(err);
       });
-  }, [roomName, isRecorder]);
+  }, [roomName]);
 
   useEffect(() => {
     if (credentials) {
@@ -71,6 +73,18 @@ export default function VideoRoom() {
 
   return (
     <div id="callContainer" className={classes.callContainer}>
+      <img
+        width="100"
+        height="100"
+        style={{
+          marginLeft: '20px',
+          marginTop: '20px',
+          position: 'absolute',
+          zIndex: '1000',
+        }}
+        src="/vonage-avatar.png"
+        alt=""
+      />
       <div
         id="roomContainer"
         className={classes.roomContainer}
@@ -98,6 +112,7 @@ export default function VideoRoom() {
           isScreenSharing={isScreenSharing}
           startScreenSharing={startScreenSharing}
           stopScreenSharing={stopScreenSharing}
+          isRecorder={isRecorder}
         ></ToolBar>
       )}
     </div>

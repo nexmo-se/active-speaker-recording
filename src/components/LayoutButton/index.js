@@ -7,11 +7,14 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import Typography from '@material-ui/core/Typography';
+import useSignal from '../../hooks/useSignal';
 
 const ITEM_HEIGHT = 48;
 
 export default function LayoutButton({ classes, room }) {
   const localClasses = styles();
+  const { sendSignal } = useSignal({ room });
+
   const [layOut, setLayOut] = useState('grid');
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -19,7 +22,30 @@ export default function LayoutButton({ classes, room }) {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  
+
+  // const addEmoji = () => {
+  //   const node = document.createElement('div');
+  //   node.appendChild(document.createTextNode('👍'));
+  //   node.classList.add(localClasses.emoji);
+  //   document
+  //     .getElementById('MP_camera_publisher_default_controls')
+  //     .appendChild(node);
+
+  //   // node.addEventListener('animationend', (e) => {
+  //   //   console.log(e);
+  //   //   removeEmoji(e.target);
+  //   // });
+  // };
+
+  const addEmoji = () => {
+    sendSignal('emoji', 'emoji');
+  };
+
+  // const removeEmoji = (node) => {
+  //   document
+  //     .getElementById('MP_camera_publisher_default_controls')
+  //     .removeChild(node);
+  // };
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -45,7 +71,7 @@ export default function LayoutButton({ classes, room }) {
           aria-controls="long-menu"
           aria-haspopup="true"
           className={classes.toolbarButtons}
-          onClick={handleClick}
+          onClick={addEmoji}
         >
           <DashboardIcon />
         </IconButton>
@@ -59,8 +85,8 @@ export default function LayoutButton({ classes, room }) {
         PaperProps={{
           style: {
             maxHeight: ITEM_HEIGHT * 4.5,
-            width: '40ch'
-          }
+            width: '40ch',
+          },
         }}
       >
         <MenuItem

@@ -42,17 +42,6 @@ app.get('/session/:room', async (req, res) => {
   }
 });
 
-/*
-
-const test = {test:{"session":"123", "renderId":"987"}, perro:{"session":"126", "renderId":"92227"}}
-for (const [key, value] of Object.entries(test)) {
-  for(const [key_e, value_e] of Object.entries(value)){ 
-    if(value_e === '987'){console.log(test[key])}
-  }
-}
-
-*/
-
 app.post('/render', async (req, res) => {
   try {
     const { roomName } = req.body;
