@@ -23,30 +23,6 @@ export default function LayoutButton({ classes, room }) {
     setAnchorEl(event.currentTarget);
   };
 
-  // const addEmoji = () => {
-  //   const node = document.createElement('div');
-  //   node.appendChild(document.createTextNode('👍'));
-  //   node.classList.add(localClasses.emoji);
-  //   document
-  //     .getElementById('MP_camera_publisher_default_controls')
-  //     .appendChild(node);
-
-  //   // node.addEventListener('animationend', (e) => {
-  //   //   console.log(e);
-  //   //   removeEmoji(e.target);
-  //   // });
-  // };
-
-  const addEmoji = () => {
-    sendSignal('emoji', 'emoji');
-  };
-
-  // const removeEmoji = (node) => {
-  //   document
-  //     .getElementById('MP_camera_publisher_default_controls')
-  //     .removeChild(node);
-  // };
-
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -71,7 +47,7 @@ export default function LayoutButton({ classes, room }) {
           aria-controls="long-menu"
           aria-haspopup="true"
           className={classes.toolbarButtons}
-          onClick={addEmoji}
+          onClick={handleClick}
         >
           <DashboardIcon />
         </IconButton>

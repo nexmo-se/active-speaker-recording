@@ -163,6 +163,7 @@ export default function ToolBar({
         handleMuteAll={handleMuteAll}
         areAllMuted={areAllMuted}
         classes={classes}
+        room={room}
       />
       <LayoutButton classes={classes} room={room} />
       <EndCallButton classes={classes} handleEndCall={endCall} />

@@ -24,31 +24,37 @@ export default function useSignal({ room }) {
 
   const emojiHandler = ({ data, isSentByMe, from }) => {
     console.log('someone sent an emoji');
-    if (!isSentByMe) console.log(from.camera.id);
     // console.log(data);
+    const elementToInsertEmoji = isSentByMe
+      ? 'MP_camera_publisher_default_controls'
+      : from.camera.id;
+    console.log('inserting emoji in ' + elementToInsertEmoji);
     const node = document.createElement('div');
-    node.appendChild(document.createTextNode('👍'));
+    const img = document.createElement('img');
+    img.src = '/sunglasses.png';
+    img.width = '100';
+    node.appendChild(img);
+    // node.appendChild(document.createTextNode('\uD83D\uDE00'));
     node.classList.add('emoji');
 
-    if (!isSentByMe) {
-      document.getElementById(from.camera.id).appendChild(node);
-    } else {
-      document
-        .getElementById('MP_camera_publisher_default_controls')
-        .appendChild(node);
-    }
+    document.getElementById(elementToInsertEmoji).appendChild(node);
+
+    // if (!isSentByMe) {
+    //   document.getElementById(from.camera.id).appendChild(node);
+    // } else {
+    //   document
+    //     .getElementById('MP_camera_publisher_default_controls')
+    //     .appendChild(node);
+    // }
 
     node.addEventListener('animationend', (e) => {
       console.log(e);
-      // removeEmoji(e.target);
+      removeEmoji(e.target, elementToInsertEmoji);
     });
-    // console.log('who sent it' + isSentByMe);
   };
 
-  const removeEmoji = (node) => {
-    document
-      .getElementById('MP_camera_publisher_default_controls')
-      .removeChild(node);
+  const removeEmoji = (node, element) => {
+    document.getElementById(element).removeChild(node);
   };
 
   const archiveListener = React.useCallback(({ data }) => {
