@@ -24,14 +24,17 @@ export default function useSignal({ room }) {
 
   const emojiHandler = ({ data, isSentByMe, from }) => {
     console.log('someone sent an emoji');
-    // console.log(data);
+    console.log(data);
     const elementToInsertEmoji = isSentByMe
       ? 'MP_camera_publisher_default_controls'
       : from.camera.id;
     console.log('inserting emoji in ' + elementToInsertEmoji);
     const node = document.createElement('div');
     const img = document.createElement('img');
-    img.src = '/sunglasses.png';
+    if (data === 'thumbsup') img.src = '/thumbsup.png';
+    if (data === 'thumbsdown') img.src = '/thumbsdown.png';
+    if (data === 'love') img.src = '/love.png';
+
     img.width = '100';
     node.appendChild(img);
     // node.appendChild(document.createTextNode('\uD83D\uDE00'));

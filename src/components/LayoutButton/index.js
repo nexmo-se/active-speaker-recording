@@ -13,7 +13,6 @@ const ITEM_HEIGHT = 48;
 
 export default function LayoutButton({ classes, room }) {
   const localClasses = styles();
-  const { sendSignal } = useSignal({ room });
 
   const [layOut, setLayOut] = useState('grid');
   const [anchorEl, setAnchorEl] = useState(null);

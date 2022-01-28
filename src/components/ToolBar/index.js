@@ -6,7 +6,7 @@ import MuteAudioButton from 'components/MuteAudioButton';
 import MuteVideoButton from 'components/MuteVideoButton';
 import RecordingButton from 'components/RecordingButton';
 import LayoutButton from 'components/LayoutButton';
-import MuteAll from 'components/MuteAllButton';
+import ReactionsButton from 'components/ReactionsButton';
 import ScreenSharingButton from 'components/ScreenSharingButton';
 import EndCallButton from 'components/EndCallButton';
 import styles from './styles';
@@ -159,7 +159,7 @@ export default function ToolBar({
         stopScreenSharing={stopScreenSharing}
         classes={classes}
       />
-      <MuteAll
+      <ReactionsButton
         handleMuteAll={handleMuteAll}
         areAllMuted={areAllMuted}
         classes={classes}
