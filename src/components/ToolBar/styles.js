@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-export default makeStyles(theme => ({
+export default makeStyles((theme) => ({
   toolbarContainer: {
     backgroundColor: theme.palette.toolbarBackground.main,
     display: 'flex',
@@ -11,7 +11,7 @@ export default makeStyles(theme => ({
     right: 0,
     height: '90px',
     margin: theme.spacing(2),
-    borderRadius: '25px'
+    borderRadius: '25px',
   },
   paper: {
     position: 'absolute',
@@ -20,7 +20,7 @@ export default makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3)
+    padding: theme.spacing(2, 4, 3),
   },
   toolbarMobileContainer: {
     backgroundColor: theme.palette.toolbarBackground.main,
@@ -39,14 +39,14 @@ export default makeStyles(theme => ({
     margin: theme.spacing(1),
     borderRadius: '5em',
     backgroundColor: '#32353A',
-    color: '#fff'
+    color: '#fff',
   },
   arrowButton: {
     borderRadius: '5em',
     height: '50px',
     width: '50px',
     backgroundColor: '#32353A',
-    color: '#fff'
+    color: '#fff',
   },
   infoButton: {
     position: 'absolute',
@@ -56,24 +56,27 @@ export default makeStyles(theme => ({
     height: '50px',
     width: '50px',
     backgroundColor: '#32353A',
-    color: '#fff'
+    color: '#fff',
   },
   groupButton: {
-    margin: '8px'
+    margin: '8px',
   },
   disabledButton: {
     backgroundColor: theme.palette.activeButtons.red,
     '&:hover': {
-      backgroundColor: theme.palette.activeButtons.red
-    }
+      backgroundColor: theme.palette.activeButtons.red,
+    },
   },
   activeButton: {
     backgroundColor: theme.palette.activeButtons.green,
     '&:hover': {
-      backgroundColor: theme.palette.activeButtons.green
-    }
+      backgroundColor: theme.palette.activeButtons.green,
+    },
   },
   activeButtonIcon: {
-    color: theme.palette.activeButtons.green
-  }
+    color: theme.palette.activeButtons.green,
+  },
+  recorder: {
+    display: 'none',
+  },
 }));

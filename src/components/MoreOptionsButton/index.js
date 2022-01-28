@@ -23,28 +23,30 @@ export default function MoreOptionsButton({
   classes,
   participants,
   room,
-  localParticipant
+  localParticipant,
+  toggleDrawer,
+  drawerState,
+  listOfMessages,
 }) {
-  const { listOfMessages } = useSignal({ room });
+  // const { listOfMessages } = useSignal({ room });
   const titleToolTip = 'Chat';
   const localClasses = styles();
-  const [state, setState] = React.useState(false);
 
-  const toggleDrawer = () => event => {
-    if (
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
-    ) {
-      return;
-    }
-    setState(!state);
-  };
+  // const toggleDrawer = () => (event) => {
+  //   if (
+  //     event.type === 'keydown' &&
+  //     (event.key === 'Tab' || event.key === 'Shift')
+  //   ) {
+  //     return;
+  //   }
+  //   setState(!state);
+  // };
 
   return (
     <div>
       <Tooltip title={titleToolTip} aria-label="add">
         <IconButton
-          onClick={toggleDrawer()}
+          onClick={toggleDrawer}
           edge="start"
           color="inherit"
           aria-label="mic"
@@ -54,8 +56,8 @@ export default function MoreOptionsButton({
         </IconButton>
       </Tooltip>
       <Drawer
-        open={state}
-        onClose={toggleDrawer(false)}
+        open={drawerState}
+        onClose={toggleDrawer}
         classes={{ paper: localClasses.paper }}
       >
         <SideMenu

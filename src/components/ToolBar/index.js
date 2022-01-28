@@ -25,8 +25,11 @@ export default function ToolBar({
   stopScreenSharing,
   participants,
   localParticipant,
+  drawerState,
+  toggleDrawer,
+  isRecorder,
 }) {
-  const { renderedSesion } = useSignal({ room });
+  const { renderedSesion, listOfMessages } = useSignal({ room });
   const { roomName } = useParams();
   const theme = useTheme();
   const { push } = useHistory();
@@ -129,12 +132,15 @@ export default function ToolBar({
       />
     </div>
   ) : (
-    <div className={classes.toolbarContainer}>
+    <div className={isRecorder ? classes.recorder : classes.toolbarContainer}>
       <MoreOptionsButton
         classes={classes}
         participants={participants}
         room={room}
         localParticipant={localParticipant}
+        drawerState={drawerState}
+        toggleDrawer={toggleDrawer}
+        listOfMessages={listOfMessages}
       />
       <MuteAudioButton
         toggleAudio={toggleAudio}

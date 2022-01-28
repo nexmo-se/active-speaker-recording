@@ -26,6 +26,10 @@
 #layoutContainer {
   background-color: transparent !important;
 }
+.chatOpen {
+  width: 70% !important;
+  margin-left: 30vw !important;
+}
 
 #roomContainer > .OT_publisher {
   bottom: 25px;

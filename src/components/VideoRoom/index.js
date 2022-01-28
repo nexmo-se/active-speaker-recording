@@ -25,10 +25,14 @@ export default function VideoRoom() {
     cameraPublishing,
     localParticipant,
   } = useRoom();
-  const { sendSignal } = useSignal({ room });
   const isRecorder = useRouteMatch('/room/recorder/:roomName')?.isExact
     ? true
     : false;
+  const { sendSignal, drawerState, toggleDrawer } = useSignal({
+    room,
+    isRecorder,
+  });
+
   const { isScreenSharing, startScreenSharing, stopScreenSharing } =
     useScreenSharing({ room });
   const roomContainer = useRef();
@@ -102,19 +106,22 @@ export default function VideoRoom() {
           )}
         </div>
       </div>
-      {!isRecorder && (
-        <ToolBar
-          room={room}
-          participants={participants}
-          localParticipant={localParticipant}
-          connected={connected}
-          cameraPublishing={cameraPublishing}
-          isScreenSharing={isScreenSharing}
-          startScreenSharing={startScreenSharing}
-          stopScreenSharing={stopScreenSharing}
-          isRecorder={isRecorder}
-        ></ToolBar>
-      )}
+      {/* {!isRecorder && ( */}
+      <ToolBar
+        room={room}
+        participants={participants}
+        localParticipant={localParticipant}
+        connected={connected}
+        cameraPublishing={cameraPublishing}
+        isScreenSharing={isScreenSharing}
+        startScreenSharing={startScreenSharing}
+        stopScreenSharing={stopScreenSharing}
+        isRecorder={isRecorder}
+        drawerState={drawerState}
+        toggleDrawer={toggleDrawer}
+        isRecorder={isRecorder}
+      ></ToolBar>
+      // )}
     </div>
   );
 }

@@ -17,7 +17,6 @@ import { useParams } from 'react-router';
 
 export default function RecordingButton({ classes, room }) {
   let { roomName } = useParams();
-  const { user, setUser } = useContext(UserContext);
   const { archiveId } = useSignal({ room });
   const [isRecording, setRecording] = useState(false);
   const [renderId, setRenderId] = useState(null);

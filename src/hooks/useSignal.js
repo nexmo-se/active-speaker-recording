@@ -1,10 +1,11 @@
 import React from 'react';
 import moment from 'moment';
 
-export default function useSignal({ room }) {
+export default function useSignal({ room, isRecorder }) {
   const [archiveId, setArchiveId] = React.useState(null);
   const [renderedSesion, setRenderedSession] = React.useState(null);
   const [listOfMessages, setListOfMessages] = React.useState([]);
+  const [drawerState, setDrawerState] = React.useState(false);
 
   const sendSignal = React.useCallback(
     (data, type) => {
@@ -15,16 +16,44 @@ export default function useSignal({ room }) {
     [room]
   );
 
-  const signalListener = React.useCallback(({ data, isSentByMe, from }) => {
-    // console.log(data);
-    const date = moment(new Date().getTime()).format('HH:mm');
-    addMessageToList(data, isSentByMe, from, date);
-    // console.log('who sent it' + isSentByMe);
+  const toggleDrawer = React.useCallback(() => {
+    console.log('toggling drawer');
+    // if (
+    //   event.type === 'keydown' &&
+    //   (event.key === 'Tab' || event.key === 'Shift')
+    // ) {
+    //   return;
+    // }
+    setDrawerState(!drawerState);
+  }, [drawerState, setDrawerState]);
+
+  const addMessageToList = React.useCallback((data, isSentByMe, from, date) => {
+    setListOfMessages((prev) => [...prev, { data, isSentByMe, from, date }]);
   }, []);
 
-  const emojiHandler = ({ data, isSentByMe, from }) => {
-    console.log('someone sent an emoji');
-    console.log(data);
+  const signalListener = React.useCallback(
+    ({ data, isSentByMe, from }) => {
+      if (isRecorder || !isSentByMe) {
+        // toggleDrawer();
+        document.getElementById('layoutContainer').classList.add('chatOpen');
+        toggleDrawer();
+
+        setTimeout(() => {
+          document
+            .getElementById('layoutContainer')
+            .classList.remove('chatOpen');
+          setDrawerState(false);
+        }, 5000);
+      }
+      // console.log(data);
+      const date = moment(new Date().getTime()).format('HH:mm');
+      addMessageToList(data, isSentByMe, from, date);
+      // console.log('who sent it' + isSentByMe);
+    },
+    [addMessageToList, isRecorder, toggleDrawer]
+  );
+
+  const emojiHandler = React.useCallback(({ data, isSentByMe, from }) => {
     const elementToInsertEmoji = isSentByMe
       ? 'MP_camera_publisher_default_controls'
       : from.camera.id;
@@ -37,24 +66,14 @@ export default function useSignal({ room }) {
 
     img.width = '100';
     node.appendChild(img);
-    // node.appendChild(document.createTextNode('\uD83D\uDE00'));
     node.classList.add('emoji');
 
     document.getElementById(elementToInsertEmoji).appendChild(node);
 
-    // if (!isSentByMe) {
-    //   document.getElementById(from.camera.id).appendChild(node);
-    // } else {
-    //   document
-    //     .getElementById('MP_camera_publisher_default_controls')
-    //     .appendChild(node);
-    // }
-
     node.addEventListener('animationend', (e) => {
-      console.log(e);
       removeEmoji(e.target, elementToInsertEmoji);
     });
-  };
+  }, []);
 
   const removeEmoji = (node, element) => {
     document.getElementById(element).removeChild(node);
@@ -70,10 +89,6 @@ export default function useSignal({ room }) {
     // console.log('who sent it' + isSentByMe);
   }, []);
 
-  const addMessageToList = React.useCallback((data, isSentByMe, from, date) => {
-    setListOfMessages((prev) => [...prev, { data, isSentByMe, from, date }]);
-  }, []);
-
   React.useEffect(() => {
     if (room) {
       room.on('signal:text', signalListener);
@@ -87,7 +102,7 @@ export default function useSignal({ room }) {
         room.off('signal:emoji', emojiHandler);
       }
     };
-  }, [room, signalListener, archiveListener]);
+  }, [room, signalListener, archiveListener, emojiHandler]);
 
   // React.useEffect(() => {}, [listOfMessages]);
 
@@ -96,6 +111,8 @@ export default function useSignal({ room }) {
     listOfMessages,
     archiveId,
     renderedSesion,
+    toggleDrawer,
+    drawerState,
     // addMessageToList
   };
 }
