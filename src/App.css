@@ -21,6 +21,12 @@
 .App-link {
   color: #61dafb;
 }
+* {
+  -ms-overflow-style: none;
+}
+::-webkit-scrollbar {
+  display: none;
+}
 
 /* Temporary Fixes */
 #layoutContainer {

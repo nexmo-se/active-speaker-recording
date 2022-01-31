@@ -12,6 +12,9 @@ export default makeStyles((theme) => ({
   chatContainer: {
     display: 'flex',
     flexDirection: 'row',
+    msOverflowStyle: 'none',
+    WebkitAppearance: 'none',
+    // webkit
   },
   chatAvatar: {
     display: 'flex',
