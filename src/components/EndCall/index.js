@@ -23,12 +23,12 @@ export default function EndCall() {
   };
   useEffect(() => {
     fetchRecordings(sessionId)
-      .then(data => {
+      .then((data) => {
         if (data.data) {
           setRecordings(data.data);
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   }, [sessionId]);
@@ -36,8 +36,8 @@ export default function EndCall() {
   return (
     <div className={classes.container}>
       <div className={classes.meetingInfo}>
-        <h2>This is an amazing meeting</h2>
-        <h2>I hope you have had fun with us</h2>
+        <h2>We hope you enjoyed your meeting</h2>
+        <h2>This was powered by Vonage</h2>
 
         <IconButton
           onClick={redirectNewMeeting}
@@ -60,7 +60,7 @@ export default function EndCall() {
               {recordings ? (
                 <div className={classes.recording}>
                   <ul>
-                    {recordings.map(recording => (
+                    {recordings.map((recording) => (
                       <li key={recording.id}>
                         Started at: {Date(recording.createdAt)}
                         {recording.status === 'available' ? (
